@@ -8,7 +8,7 @@ const initialState = {
   selectedItem: {},
   cartItemCount: 0,
   totalPrice: 0,
-  user: {},
+  user: {}, // user 초기 상태를 빈 객체로 설정
   quantity: 1,
 };
 
@@ -48,9 +48,8 @@ function cartReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        cartList: payload.items,
-        user: payload.user,
-        totalPrice: payload.items.reduce((total, item) => total + item.bookId.priceSales * item.qty, 0),
+        cartList: payload,
+        totalPrice: payload.reduce((total, item) => total + item.bookId.priceSales * item.qty, 0),
       };
     case types.GET_CART_QTY_SUCCESS:
       return {
@@ -59,7 +58,13 @@ function cartReducer(state = initialState, action) {
       };
 
     case types.ADD_TO_CART_SUCCESS:
-      return { ...state, loading: false, addToCartDone: true, cartList: [...state.cartList, payload.data], cartItemCount: payload.cartItemQty };
+      return {
+        ...state,
+        loading: false,
+        addToCartDone: true,
+        cartList: [...state.cartList, payload.item], // 여기서 payload.item으로 변경
+        cartItemCount: payload.cartItemQty,
+      };
 
     case types.GET_CART_LIST_FAIL:
     case types.DELETE_CART_ITEM_FAIL:

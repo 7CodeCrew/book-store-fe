@@ -8,12 +8,13 @@ const addToCart = (book, quantity) => async (dispatch) => {
     dispatch({ type: types.ADD_TO_CART_REQUEST });
     const response = await api.post('/cart', { bookId: book._id, qty: quantity });
     if (response.status !== 200) throw new Error(response.error);
-    dispatch({ type: types.ADD_TO_CART_SUCCESS, payload: response.data });
+    dispatch({ type: types.ADD_TO_CART_SUCCESS, payload: { item: response.data.data, cartItemQty: response.data.cartItemQty } });
     dispatch(commonUiActions.showToastMessage(`${quantity}개의 책이 장바구니에 담겼습니다.`, 'success'));
   } catch (error) {
     dispatch({ type: types.ADD_TO_CART_FAIL, payload: error.message });
   }
 };
+
 // 장바구니 아이템 조회.
 const getCartList = () => async (dispatch) => {
   try {

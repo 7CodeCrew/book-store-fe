@@ -2,7 +2,7 @@ import * as types from '../constants/user.constants';
 
 const initialState = {
   loading: false,
-  user: null,
+  user: {},
   error: '',
   users: [],
   adminError: '',

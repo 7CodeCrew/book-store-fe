@@ -13,7 +13,8 @@ import { currencyFormat } from '../utils/number';
 const CartPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { cartList, totalPrice, user } = useSelector((state) => state.cart);
+  const { cartList, totalPrice } = useSelector((state) => state.cart);
+  const { user } = useSelector((state) => state.user);
   const { fullAddress = '' } = useSelector((state) => state.order); // fullAddress 초기값 설정
   const [selectedItems, setSelectedItems] = useState([]); // 선택된 상품을 상태로 관리
 
@@ -33,13 +34,12 @@ const CartPage = () => {
       setSelectedItems([]); // 전체 선택 해제
     }
   };
-  // 개별 항목 선택/해제 핸들러
+
   const handleSelectItem = (itemId) => {
     setSelectedItems((prevState) => (prevState.includes(itemId) ? prevState.filter((id) => id !== itemId) : [...prevState, itemId])); // 선택 해제 또는 추가
   };
-  // 선택된 상품 리스트
+
   const selectedCartList = cartList.filter((item) => selectedItems.includes(item._id));
-  // 선택된 상품의 총 가격 계산
   const selectedTotalPrice = selectedCartList.reduce((total, item) => total + item.bookId.priceSales * item.qty, 0);
 
   const getDiscountRate = (level) => {
@@ -55,13 +55,14 @@ const CartPage = () => {
     }
   };
 
-  const discountRate = getDiscountRate(user.level);
+  // user 객체가 존재하고 level 속성이 있는지 확인
+  const discountRate = user?.level ? getDiscountRate(user.level) : 0;
   const discountAmount = selectedTotalPrice * discountRate;
   const finalTotalPrice = selectedTotalPrice - discountAmount;
   const shippingFee = selectedItems.length > 0 ? (finalTotalPrice > 100000 ? 0 : 2500) : 0;
   const pointsEarned = finalTotalPrice * 0.05;
   const grandTotal = finalTotalPrice + shippingFee;
-  // 결제 페이지로 이동하는 함수
+
   const handleCheckout = () => {
     navigate('/payment', { state: { selectedCartList, finalTotalPrice, discountAmount, discountRate, shippingFee, pointsEarned, grandTotal } });
   };
@@ -69,75 +70,83 @@ const CartPage = () => {
   return (
     <ThemeProvider theme={theme}>
       <Container>
-        <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
-          <Typography variant="h6">{user.userName}님</Typography>
-          <Typography variant="body1">Level: {user.level}</Typography>
-        </Box>
-        <Box mb={4}>
-          <Box display="flex" justifyContent="space-between" mb={2} alignItems="center">
-            <FormControlLabel
-              control={<Checkbox checked={selectedItems.length === cartList.length} onChange={handleSelectAll} color="primary" />}
-              label="전체 선택"
-            />
-            <Typography variant="h6">상품 정보</Typography>
-            <Typography variant="h6">수량</Typography>
-            <Typography variant="h6">상품 금액</Typography>
-            <Typography variant="h6">배송 정보</Typography>
-            <Typography variant="h6">삭제</Typography>
-          </Box>
-          {cartList.length > 0 ? (
-            cartList.map((item) => (
-              <CartProductCard
-                item={item}
-                key={item._id}
-                isSelected={selectedItems.includes(item._id)} // 선택된 상태 전달
-                onSelectItem={handleSelectItem} // 선택 상태 변경 함수 전달
-                userLevel={user.level} // 사용자 레벨 전달
-                fullAddress={fullAddress} // 전체 주소 전달
-              />
-            ))
-          ) : (
-            <Box textAlign="center" mt={4}>
-              <Typography variant="h6" gutterBottom>
-                카트가 비어 있습니다
-              </Typography>
-              <Button component={Link} to="/" variant="contained" color="primary">
-                상품을 담으러 가기
-              </Button>
+        {user ? ( // user 객체가 존재하는 경우에만 렌더링
+          <>
+            <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
+              <Typography variant="h6">{user.userName}님</Typography>
+              <Typography variant="body1">Level: {user.level}</Typography>
             </Box>
-          )}
-          <Divider sx={{ my: 2 }} />
-          {selectedCartList.length > 0 && (
-            <>
-              <Box display="flex" justifyContent="space-between">
-                <Typography variant="body1">총 상품 금액:</Typography>
-                <Typography variant="body1">₩{currencyFormat(selectedTotalPrice)}</Typography>
+            <Box mb={4}>
+              <Box display="flex" justifyContent="space-between" mb={2} alignItems="center">
+                <FormControlLabel
+                  control={<Checkbox checked={selectedItems.length === cartList.length} onChange={handleSelectAll} color="primary" />}
+                  label="전체 선택"
+                />
+                <Typography variant="h6">상품 정보</Typography>
+                <Typography variant="h6">수량</Typography>
+                <Typography variant="h6">상품 금액</Typography>
+                <Typography variant="h6">배송 정보</Typography>
+                <Typography variant="h6">삭제</Typography>
               </Box>
-              <Box display="flex" justifyContent="space-between">
-                <Typography variant="body1">할인 금액:</Typography>
-                <Typography variant="body1">₩{currencyFormat(discountAmount)}</Typography>
-              </Box>
-              <Box display="flex" justifyContent="space-between">
-                <Typography variant="body1">최종 금액:</Typography>
-                <Typography variant="body1">₩{currencyFormat(finalTotalPrice)}</Typography>
-              </Box>
-              <Box display="flex" justifyContent="space-between">
-                <Typography variant="body1">배송비 (100불 이상 구매 시 무료):</Typography>
-                <Typography variant="body1">₩{finalTotalPrice > 100000 ? 0 : currencyFormat(2500)}</Typography>
-              </Box>
-              <Box display="flex" justifyContent="space-between">
-                <Typography variant="body1">총 적립액 (구매 금액의 5%):</Typography>
-                <Typography variant="body1">₩{currencyFormat(finalTotalPrice * 0.05)}</Typography>
-              </Box>
-            </>
-          )}
-        </Box>
-        <OrderReceipt
-          cartList={selectedCartList}
-          finalTotalPrice={finalTotalPrice}
-          hasSelectedItems={selectedItems.length > 0}
-          handleCheckout={handleCheckout}
-        />
+              {cartList.length > 0 ? (
+                cartList.map((item) => (
+                  <CartProductCard
+                    item={item}
+                    key={item._id}
+                    isSelected={selectedItems.includes(item._id)}
+                    onSelectItem={handleSelectItem}
+                    userLevel={user.level}
+                    fullAddress={fullAddress}
+                  />
+                ))
+              ) : (
+                <Box textAlign="center" mt={4}>
+                  <Typography variant="h6" gutterBottom>
+                    카트가 비어 있습니다
+                  </Typography>
+                  <Button component={Link} to="/" variant="contained" color="primary">
+                    상품을 담으러 가기
+                  </Button>
+                </Box>
+              )}
+              <Divider sx={{ my: 2 }} />
+              {selectedCartList.length > 0 && (
+                <>
+                  <Box display="flex" justifyContent="space-between">
+                    <Typography variant="body1">총 상품 금액:</Typography>
+                    <Typography variant="body1">₩{currencyFormat(selectedTotalPrice)}</Typography>
+                  </Box>
+                  <Box display="flex" justifyContent="space-between">
+                    <Typography variant="body1">할인 금액:</Typography>
+                    <Typography variant="body1">₩{currencyFormat(discountAmount)}</Typography>
+                  </Box>
+                  <Box display="flex" justifyContent="space-between">
+                    <Typography variant="body1">최종 금액:</Typography>
+                    <Typography variant="body1">₩{currencyFormat(finalTotalPrice)}</Typography>
+                  </Box>
+                  <Box display="flex" justifyContent="space-between">
+                    <Typography variant="body1">배송비 (100불 이상 구매 시 무료):</Typography>
+                    <Typography variant="body1">₩{finalTotalPrice > 100000 ? 0 : currencyFormat(2500)}</Typography>
+                  </Box>
+                  <Box display="flex" justifyContent="space-between">
+                    <Typography variant="body1">총 적립액 (구매 금액의 5%):</Typography>
+                    <Typography variant="body1">₩{currencyFormat(finalTotalPrice * 0.05)}</Typography>
+                  </Box>
+                </>
+              )}
+            </Box>
+            <OrderReceipt
+              cartList={selectedCartList}
+              finalTotalPrice={finalTotalPrice}
+              hasSelectedItems={selectedItems.length > 0}
+              handleCheckout={handleCheckout}
+            />
+          </>
+        ) : (
+          <Typography variant="h6" gutterBottom>
+            사용자 정보를 불러오고 있습니다...
+          </Typography>
+        )}
       </Container>
     </ThemeProvider>
   );
