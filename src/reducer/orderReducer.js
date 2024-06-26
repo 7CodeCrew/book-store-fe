@@ -3,6 +3,7 @@ const initialState = {
   loading: false,
   error: '',
   orderList: [],
+  myOrderList: [],
   selectedOrder: '',
   fullAddress: '',
   deliveryInfo: '',
@@ -15,6 +16,7 @@ function orderReducer(state = initialState, action) {
     case types.GET_ORDER_LIST_REQUEST:
     case types.UPDATE_ORDER_REQUEST:
     case types.CREATE_ORDER_REQUEST:
+    case types.GET_ORDER_REQUEST:
       return { ...state, loading: true };
     case types.CREATE_ORDER_SUCCESS:
       return {
@@ -24,13 +26,17 @@ function orderReducer(state = initialState, action) {
       };
     case types.SET_SELECTED_ORDER:
       return { ...state, loading: false, error: '', selectedOrder: payload };
+    case types.GET_ORDER_SUCCESS:
+      return { ...state, loading: false, error: '', myOrderList: payload.orders };
+
     case types.GET_ORDER_LIST_SUCCESS:
       return { ...state, loading: false, error: '', orderList: payload.orders };
     case types.UPDATE_ORDER_SUCCESS:
       return { ...state, loading: false, error: '' };
-    case types.GET_ORDER_FAIL:
+
     case types.UPDATE_ORDER_FAIL:
     case types.CREATE_ORDER_FAIL:
+    case types.GET_ORDER_FAIL:
       return { ...state, loading: false, error: payload };
     case types.SET_FULL_ADDRESS:
       return { ...state, fullAddress: payload };

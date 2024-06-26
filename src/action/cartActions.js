@@ -15,22 +15,11 @@ const addToCart = (book, quantity) => async (dispatch) => {
   }
 };
 // 장바구니 아이템 조회.
-// const getCartList = () => async (dispatch) => {
-//   try {
-//     dispatch({ type: types.GET_CART_LIST_REQUEST });
-//     const response = await api.get('/cart');
-//     console.log('response', response);
-//     if (response.status !== 200) throw new Error(response.error);
-//     dispatch({ type: types.GET_CART_LIST_SUCCESS, payload: response.data.data });
-//   } catch (error) {
-//     dispatch({ type: types.GET_CART_LIST_FAIL, payload: error.message });
-//   }
-// };
-
 const getCartList = () => async (dispatch) => {
   try {
     dispatch({ type: types.GET_CART_LIST_REQUEST });
     const response = await api.get('/cart');
+    console.log('response', response);
     if (response.status !== 200) throw new Error(response.error);
     console.log(response, 'responsesssssss');
     dispatch({ type: types.GET_CART_LIST_SUCCESS, payload: response.data.data });

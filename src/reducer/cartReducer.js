@@ -59,7 +59,7 @@ function cartReducer(state = initialState, action) {
       };
 
     case types.ADD_TO_CART_SUCCESS:
-      return { ...state, loading: false, cartList: [...cartList, payload.data] };
+      return { ...state, loading: false, addToCartDone: true, cartList: [...state.cartList, payload.data], cartItemCount: payload.cartItemQty };
 
     case types.GET_CART_LIST_FAIL:
     case types.DELETE_CART_ITEM_FAIL:

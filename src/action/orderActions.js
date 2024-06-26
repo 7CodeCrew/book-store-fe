@@ -9,7 +9,6 @@ const createOrder = (payload) => async (dispatch) => {
     const response = await api.post('/order', payload);
     if (response.status !== 200) throw new Error(response.error);
     dispatch({ type: types.CREATE_ORDER_SUCCESS, payload: response.data.orderNum });
-    console.log('response', response);
     dispatch(cartActions.getCartQty());
     navigate('/payment/success');
   } catch (error) {
@@ -19,7 +18,16 @@ const createOrder = (payload) => async (dispatch) => {
 };
 
 // 내 주문 조회.
-const getMyOrder = () => async (dispatch) => {};
+const getMyOrder = () => async (dispatch) => {
+  try {
+    dispatch({ type: types.GET_ORDER_LIST_REQUEST });
+    const response = await api.get('/order/me');
+    dispatch({ type: types.GET_ORDER_SUCCESS, payload: response.data });
+  } catch (err) {
+    dispatch({ type: types.GET_ORDER_LIST_FAIL, payload: err.error });
+    dispatch(commonUiActions.showToastMessage(err.error, 'error'));
+  }
+};
 
 // 모든 주문 조회.
 const getOrderList = (query) => async (dispatch) => {

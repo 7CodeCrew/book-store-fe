@@ -46,7 +46,7 @@ const NavToolbar = () => {
   const [searchQuery, setSearchQuery] = useState(totalField);
 
   const goToMyPage = () => {
-    navigate('/account/myinfo');
+    navigate('/mypage');
   };
 
   const goToAdminPage = () => {
@@ -171,7 +171,7 @@ const NavToolbar = () => {
           <MenuItem
             onClick={() => {
               popupState.close();
-              navigate('/account/myinfo');
+              navigate('/mypage');
             }}>
             마이페이지
           </MenuItem>

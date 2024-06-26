@@ -152,6 +152,47 @@ const updateUserLevel = (id, level) => async (dispatch) => {
   }
 };
 
+// 회원 정보- 비밀번호 확인
+const confirmPassword = (password, navigate) => async (dispatch) => {
+  try {
+    dispatch({ type: types.USER_CONFIRM_REQUEST });
+    const response = await api.post('/user/confirmPassword', { password });
+    dispatch({ type: types.USER_CONFIRM_SUCCESS });
+    navigate('/member/user-info');
+  } catch (err) {
+    dispatch({ type: types.USER_CONFIRM_FAIL, payload: err.error });
+    dispatch(commonUiActions.showToastMessage(err.error, 'error'));
+  }
+};
+
+// 회원 정보 수정 요청
+const userInfoChange = (id, newUserInfo) => async (dispatch) => {
+  try {
+    dispatch({ type: types.USER_INFO_REQUEST });
+    const response = await api.put(`/user/myInfo/${id}`, newUserInfo);
+    dispatch({ type: types.USER_INFO_SUCCESS });
+    dispatch(commonUiActions.showToastMessage('회원 정보를 수정했습니다.', 'success'));
+  } catch (err) {
+    dispatch({ type: types.USER_INFO_FAIL, payload: err.error });
+    dispatch(commonUiActions.showToastMessage(err.error, 'error'));
+  }
+};
+
+// 회원 탈퇴
+const deleteUser = (id, password, navigate) => async (dispatch) => {
+  try {
+    dispatch({ type: types.USER_DELETE_REQUEST });
+    const response = await api.post(`/user/delete/${id}`, { password });
+    dispatch({ type: types.USER_DELETE_SUCCESS });
+    dispatch(logout());
+    navigate('/');
+    dispatch(commonUiActions.showToastMessage('회원 탈퇴를 완료했습니다.', 'success'));
+  } catch (err) {
+    dispatch({ type: types.USER_DELETE_FAIL, payload: err.error });
+    dispatch(commonUiActions.showToastMessage(err.error, 'error'));
+  }
+};
+
 export const userActions = {
   loginWithToken,
   loginWithEmail,
@@ -165,4 +206,7 @@ export const userActions = {
   registerAdmin,
   getAllUser,
   updateUserLevel,
+  confirmPassword,
+  userInfoChange,
+  deleteUser,
 };

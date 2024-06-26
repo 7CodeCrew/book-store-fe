@@ -4,16 +4,16 @@ import { Box, Typography, Link, Grid, Button } from '@mui/material';
 const MyPageCategory = () => {
   const userLevel = ['브론즈', '실버', '골드', '플래텸'];
   const myShoppingList = [
-    { list: '주문내역/배송조회', link: '/mypage/orderlist' },
-    { list: '반품/교환 신청 및 조회', link: '/mypage/orderclaimlist' },
-    { list: '취소 주문 내역', link: '/mypage/ordercancellist' },
-    { list: '리뷰 관리', link: '/mypage/myreview' },
+    { list: '주문내역/배송조회', link: '/mypage/order-list' },
+    { list: '반품/교환 신청 및 조회', link: '/mypage/order-claim-list' },
+    { list: '취소 주문 내역', link: '/mypage/order-cancel-list' },
+    { list: '리뷰 관리', link: '/mypage/my-review' },
     { list: '찜한 도서', link: '/mypage/wishlist' },
   ];
   const myInfoList = [
-    { list: '개인정보 수정', link: '#' },
+    { list: '개인정보 수정', link: '/member/confirm-password' },
     { list: '이벤트 당첨 내역', link: '#' },
-    { list: '회원 탈퇴', link: '#' },
+    { list: '회원 탈퇴', link: '/member/account-deletion' },
   ];
   return (
     <>
