@@ -1,18 +1,40 @@
 # 📚북두칠성
-## 목차
-- [👀 프로젝트 소개](#프로젝트-소개)
-- [👨‍👩‍👧‍👦팀 소개](#팀-소개)
-- [🛠 기술 스택](#기술-스택)
-- [🔁 flow](#flow)
-- [💻구현 기능 & 화면 구성](#구현-기능--화면-구성)
+![image](https://github.com/7CodeCrew/book-store-fe/assets/113080461/f8ffef16-9b52-44a0-9a03-090860a51e68)
+
+## 0. 목차
+- [1. 프로젝트 소개](#프로젝트-소개)
+- [2. 팀 소개](#팀-소개)
+- [3. 기술 스택](#기술-스택)
+- [4. flow](#flow)
+- [5. 구현 기능 & 화면 구성](#구현-기능--화면-구성)
 
 
 <a name="프로젝트-소개"></a>
-## 북두칠성
+## 1. 프로젝트 소개
+- 프로젝트 기간 : 2024.06.16 ~ 2024.06.30 <2주> 
+- [배포 URL 🔗](https://book-do-7-stars.netlify.app/)
+
+```
+ID: admin@gmail.com
+PW: 123
+```
+### [프로젝트 진행 방식]
+## 에자일 방법론 > 스크럼
+- 전체 일정: Trello
+
+<img width="1440" alt="image" src="https://github.com/7CodeCrew/book-store-fe/assets/113080461/2d65e153-5b32-4390-9054-50b0b6e4da67">
+
+- 스탠드업 미팅: 매일 정해진 시간에 줌 미팅 진행
+
+<img width="1439" alt="image" src="https://github.com/7CodeCrew/book-store-fe/assets/113080461/8510c696-4e20-4994-bf56-8905fab68373">
+
+- 스탠드업 미팅 정리: Notion
+
+<img width="1440" alt="image" src="https://github.com/7CodeCrew/book-store-fe/assets/113080461/a175a471-47ab-4c0c-b983-2036c24563e7">
 
 
 <a name="팀-소개"></a>
-### 👥 팀 소개
+## 2. 팀 소개
 |  팀원  |        역할        |                담당 파트                 |                  깃허브 주소                  |
 | :----: | :----------------: | :--------------------------------------: | :-------------------------------------------: |
 | 근선 | 프로젝트 오너  |           마이페이지, 어드민 상품관리 및 주문관리          |  [geunseonkim](https://github.com/geunseonkim)  |
@@ -21,29 +43,26 @@
 |  헌준  |        팀원        | 메인, 깃헙, 데이타베이스, 카테고리, 헤더, 네브바, 북카드, 필터, 검색,   |    [hunjoonrhee](https://github.com/hunjoonrhee)    |
 
 
-### 프로젝트 소개
-<table>
-  <tr>
-    <td>
-      <img src="" alt="북두칠성로고" width="100" />
-    </td>
-    <td>
-      - URL <a href="https://book-do-7-stars.netlify.app/" target="_blank">바로가기</a><br/>
-      - Figma <a href="https://www.figma.com/board/zrp9Df7zWs9mTP8ZsAxFiC/7CodeCrew?node-id=0-1&t=JvYN792QJ4msDyGj-0" target="_blank">바로가기</a>
-    </td>
-  </tr>
-</table>
 
 
-#### 🗓️ 개발 기간 및 진행방식
+<a name="기술-스택"></a>
+## 3. 기술-스택
+### Front-end 
+![js](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white) 
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Redux](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)
+### Back-end 
+![js](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white) 
+![Nodejs](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+![MongoDb](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+### Deploy
+![AWS](https://img.shields.io/badge/Amazon_AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white)
 
-- 개발 기간: 2024.06.16 ~ 2024.06.30
-- 진행 방식: 스탠드업 미팅, 2주 
 
 
-#### ⛏ 기술스택 및 개발 환경
 
- <img width="570" alt="기술스택" src="">
+
+
 
 
 ### 서비스 소개
