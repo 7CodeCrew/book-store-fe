@@ -71,7 +71,8 @@ const AdminPageClaimTable = ({ claimTableHead, requestList, handleOpenRequestDia
                 </StyledTableRow>
               ))
             ) : (
-              <StyledTableCell style={{ textAlign: 'center' }}>주문이 존재하지 않습니다.</StyledTableCell>
+              <StyledTableCell style={{ textAlign: 'center' }}></StyledTableCell>
+              // <StyledTableCell style={{ textAlign: 'center' }}>주문이 존재하지 않습니다.</StyledTableCell>
             )}
           </TableBody>
         </Table>

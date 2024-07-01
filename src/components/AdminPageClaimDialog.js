@@ -19,6 +19,7 @@ import {
   Typography,
   Grid,
   TextField,
+  Paper,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { REQUEST_STATUS } from '../constants/order.constants';
@@ -54,6 +55,13 @@ const AdminPageClaimDialog = ({ open, handleClose, orderDialogTableHead }) => {
     return item ? item.bookId.title : '';
   };
 
+  const cellStyle = {
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    maxWidth: '150px',
+  };
+
   return (
     <Dialog open={open} onClose={handleClose} sx={{ width: '100%' }}>
       <DialogTitle>문의정보</DialogTitle>
@@ -69,7 +77,7 @@ const AdminPageClaimDialog = ({ open, handleClose, orderDialogTableHead }) => {
         </Box>
 
         {/* 요청사항 */}
-        <Box mb={2}>
+        <Box mb={2} sx={{ mt: 1 }}>
           {/* <Typography color="red">요청사항:{selectedRequest?.request?.requestType} </Typography> */}
           <TableContainer>
             <Table>
@@ -105,13 +113,15 @@ const AdminPageClaimDialog = ({ open, handleClose, orderDialogTableHead }) => {
         <Button onClick={handleButtonClick}>{isTableVisible ? '숨기기' : '상세주문내역 확인'}</Button>
         {isTableVisible && (
           <div>
-            <TableContainer>
+            <TableContainer component={Paper}>
               <Table>
                 {/* 테이블 헤드 */}
                 <TableHead>
                   <TableRow>
                     {orderDialogTableHead.map((head, index) => (
-                      <TableCell key={index}>{head}</TableCell>
+                      <TableCell style={cellStyle} key={index}>
+                        {head}
+                      </TableCell>
                     ))}
                   </TableRow>
                 </TableHead>
@@ -121,11 +131,11 @@ const AdminPageClaimDialog = ({ open, handleClose, orderDialogTableHead }) => {
                   {selectedRequest?.items.length > 0 &&
                     selectedRequest?.items.map((request) => (
                       <TableRow key={request?._id}>
-                        <TableCell>{request?._id}</TableCell>
-                        <TableCell>{getBookTitle(request.bookId) ? getBookTitle(request.bookId) : '주문관리에서 확인'}</TableCell>
-                        <TableCell>{currencyFormat(request?.price)}</TableCell>
-                        <TableCell>{request?.qty}</TableCell>
-                        <TableCell>{currencyFormat(request?.price * request?.qty)}</TableCell>
+                        <TableCell style={cellStyle}>{request?._id}</TableCell>
+                        <TableCell style={cellStyle}>{getBookTitle(request.bookId) ? getBookTitle(request.bookId) : '주문관리에서 확인'}</TableCell>
+                        <TableCell style={cellStyle}>{currencyFormat(request?.price)}</TableCell>
+                        <TableCell style={cellStyle}>{request?.qty}</TableCell>
+                        <TableCell style={cellStyle}>{currencyFormat(request?.price * request?.qty)}</TableCell>
                       </TableRow>
                     ))}
                   {/* <TableRow>

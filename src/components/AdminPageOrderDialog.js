@@ -17,6 +17,7 @@ import {
   MenuItem,
   Typography,
   Grid,
+  Paper,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { ORDER_STATUS } from '../constants/order.constants';
@@ -40,6 +41,13 @@ const AdminPageOrderDialog = ({ open, handleClose, orderDialogTableHead }) => {
     handleClose();
   };
 
+  const cellStyle = {
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    maxWidth: '150px',
+  };
+
   return (
     <Dialog open={open} onClose={handleClose} sx={{ width: '100%' }}>
       <DialogTitle>주문정보</DialogTitle>
@@ -51,13 +59,15 @@ const AdminPageOrderDialog = ({ open, handleClose, orderDialogTableHead }) => {
         <Typography>이메일: {selectedOrder?.contact?.email}</Typography>
         <Typography>주소: {selectedOrder?.shipTo?.address1 + ' ' + selectedOrder?.shipTo?.address2}</Typography>
         <Typography>연락처: {`${selectedOrder?.contact?.name} ${selectedOrder?.contact?.phone}`}</Typography>
-        <TableContainer>
+        <TableContainer component={Paper} sx={{ mt: 1 }}>
           <Table>
             {/* 테이블 헤드 */}
             <TableHead>
               <TableRow>
                 {orderDialogTableHead.map((head, index) => (
-                  <TableCell key={index}>{head}</TableCell>
+                  <TableCell style={cellStyle} key={index}>
+                    {head}
+                  </TableCell>
                 ))}
               </TableRow>
             </TableHead>
@@ -67,15 +77,17 @@ const AdminPageOrderDialog = ({ open, handleClose, orderDialogTableHead }) => {
               {selectedOrder.items.length > 0 &&
                 selectedOrder.items.map((order) => (
                   <TableRow key={order?._id}>
-                    <TableCell>{order?._id}</TableCell>
-                    <TableCell>{order?.bookId?.title}</TableCell>
-                    <TableCell>{currencyFormat(order?.price)}</TableCell>
-                    <TableCell>{order?.qty}</TableCell>
-                    <TableCell>{currencyFormat(order?.price * order?.qty)}</TableCell>
+                    <TableCell style={cellStyle}>{order?._id}</TableCell>
+                    <TableCell style={cellStyle}>{order?.bookId?.title}</TableCell>
+                    <TableCell style={cellStyle}>{currencyFormat(order?.price)}</TableCell>
+                    <TableCell style={cellStyle}>{order?.qty}</TableCell>
+                    <TableCell style={cellStyle}>{currencyFormat(order?.price * order?.qty)}</TableCell>
                   </TableRow>
                 ))}
               <TableRow>
-                <TableCell colSpan={4}>총계: {currencyFormat(selectedOrder?.totalPrice)}</TableCell>
+                <TableCell style={cellStyle} colSpan={4}>
+                  총계: {currencyFormat(selectedOrder?.totalPrice)}
+                </TableCell>
               </TableRow>
             </TableBody>
           </Table>

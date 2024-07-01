@@ -37,8 +37,6 @@ const MyShoppingPage = () => {
     dispatch(contactActions.getContactsByUser());
   }, [dispatch]);
 
-  // console.log('user', user);
-
   const cellStyle = {
     whiteSpace: 'nowrap',
     overflow: 'hidden',
