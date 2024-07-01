@@ -25,7 +25,7 @@ const CommentList = ({ comments, onDelete, user }) => {
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <Typography variant="body2" color="text.secondary" sx={{ marginRight: '16px' }}>
-                    {formatDate(comment.createdAt)}
+                    {comment.createdAt.slice(0, 10)}
                   </Typography>
                   {comment.userId._id === user?._id && (
                     <IconButton edge="end" aria-label="delete" onClick={() => onDelete(comment.id)}>

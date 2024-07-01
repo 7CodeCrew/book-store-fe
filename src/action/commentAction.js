@@ -7,7 +7,7 @@ const createComment = (payload) => async (dispatch) => {
     dispatch({ type: types.CREATE_COMMENT_REQUEST });
     const response = await api.post('/comments', payload);
     dispatch({ type: types.CREATE_COMMENT_SUCCESS, payload: response.data });
-    dispatch(commonUiActions.showToastMessage('Comment added successfully!', 'success'));
+    dispatch(commonUiActions.showToastMessage('리뷰가 성공적으로 추가됐습니다!', 'success'));
   } catch (err) {
     dispatch({ type: types.CREATE_COMMENT_FAIL, payload: err.message });
     dispatch(commonUiActions.showToastMessage(err.message, 'error'));

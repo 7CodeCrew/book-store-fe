@@ -22,7 +22,7 @@ const loginWithEmail = (payload) => async (dispatch) => {
     dispatch({ type: types.USER_LOGIN_REQUEST });
     const response = await api.post('/auth/login', payload);
     dispatch({ type: types.USER_LOGIN_SUCCESS, payload: response.data });
-    dispatch(commonUiActions.showToastMessage('로그인을 성공하셨습니다!', 'success'));
+    dispatch(commonUiActions.showToastMessage('로그인을 성공했습니다!', 'success'));
     sessionStorage.setItem('token', response.data.token);
   } catch (error) {
     dispatch({ type: types.USER_LOGIN_FAIL, payload: error.message });
@@ -36,7 +36,7 @@ const loginWithGoogle = (token) => async (dispatch) => {
     const response = await api.post('/auth/google', { token });
     dispatch({ type: types.GOOGLE_LOGIN_SUCCESS, payload: response.data });
     sessionStorage.setItem('token', response.data.token);
-    dispatch(commonUiActions.showToastMessage('Google login successful!', 'success'));
+    dispatch(commonUiActions.showToastMessage('구글 로그인을 성공했습니다!', 'success'));
   } catch (error) {
     dispatch({ type: types.GOOGLE_LOGIN_FAIL, payload: error.message });
     dispatch(commonUiActions.showToastMessage(error.message, 'error'));
@@ -51,7 +51,7 @@ const loginWithKakao = (code, navigate) => async (dispatch) => {
     sessionStorage.setItem('token', response.data.token);
     dispatch(loginWithToken());
     navigate('/');
-    dispatch(commonUiActions.showToastMessage('Kakao login successful!', 'success'));
+    dispatch(commonUiActions.showToastMessage('카카오 로그인을 성공했습니다', 'success'));
   } catch (error) {
     dispatch({ type: types.KAKAO_LOGIN_FAIL, payload: error.message });
     dispatch(commonUiActions.showToastMessage(error.message, 'error'));
@@ -66,7 +66,7 @@ const loginWithGithub = (code, navigate) => async (dispatch) => {
     sessionStorage.setItem('token', response.data.token);
     dispatch(loginWithToken());
     navigate('/');
-    dispatch(commonUiActions.showToastMessage('GitHub login successful!', 'success'));
+    dispatch(commonUiActions.showToastMessage('깃허브 로그인을 성공했습니다!', 'success'));
   } catch (error) {
     dispatch({ type: types.GITHUB_LOGIN_FAIL, payload: error.message });
     dispatch(commonUiActions.showToastMessage(error.message, 'error'));
@@ -98,6 +98,7 @@ const registerAdmin =
       if (Response.status !== 200) throw new Error(Response.error);
       dispatch({ type: types.REGISTER_USER_SUCCESS, payload: Response.data });
       dispatch(commonUiActions.showToastMessage(`${userName}님을 관리자로 추가했습니다.`, 'success'));
+      dispatch(getAllUser());
     } catch (error) {
       dispatch({ type: types.REGISTER_USER_FAIL, payload: error.error });
     }
@@ -173,7 +174,7 @@ const userInfoChange = (id, newUserInfo) => async (dispatch) => {
     dispatch({ type: types.USER_INFO_REQUEST });
     const response = await api.put(`/user/myInfo/${id}`, newUserInfo);
     dispatch({ type: types.USER_INFO_SUCCESS });
-    dispatch(commonUiActions.showToastMessage('회원 정보를 수정했습니다.', 'success'));
+    dispatch(commonUiActions.showToastMessage('회원정보를 수정했습니다.', 'success'));
   } catch (err) {
     dispatch({ type: types.USER_INFO_FAIL, payload: err.error });
     dispatch(commonUiActions.showToastMessage(err.error, 'error'));
@@ -188,7 +189,7 @@ const deleteUser = (id, password, navigate) => async (dispatch) => {
     dispatch({ type: types.USER_DELETE_SUCCESS });
     dispatch(logout());
     navigate('/');
-    dispatch(commonUiActions.showToastMessage('회원 탈퇴를 완료했습니다.', 'success'));
+    dispatch(commonUiActions.showToastMessage('회원탈퇴를 완료했습니다.', 'success'));
   } catch (err) {
     dispatch({ type: types.USER_DELETE_FAIL, payload: err.error });
     dispatch(commonUiActions.showToastMessage(err.error, 'error'));

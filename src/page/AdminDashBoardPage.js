@@ -5,6 +5,7 @@ import { Line, Bar, Doughnut } from 'react-chartjs-2';
 import 'chart.js/auto';
 import '../style/adminDashboardPageStyles.css';
 import AdminDashboardCard from '../components/AdminDashboardCard';
+import { currencyFormat } from '../utils/number';
 import { userActions } from '../action/userActions';
 import { orderActions } from '../action/orderActions';
 import { contactActions } from '../action/contactActions';
@@ -364,15 +365,15 @@ const ContactTable = ({ contacts }) => (
         </TableRow>
       </TableHead>
       <TableBody>
-        {contacts.map((contact) => (
-          <TableRow key={contact._id}>
-            <TableCell style={cellStyle}>{contact.userId.userName}</TableCell>
+        {contacts?.map((contact) => (
+          <TableRow key={contact?._id}>
+            <TableCell style={cellStyle}>{contact?.userId?.userName}</TableCell>
             <TableCell style={cellStyle}>
               {' '}
-              <img src={contact.image} alt={contact.inquiryContent} style={{ width: '70px', height: '50px' }} />
+              <img src={contact?.image} alt={contact?.inquiryContent} style={{ width: '70px', height: '50px' }} />
             </TableCell>
-            <TableCell style={cellStyle}>{contact.inquiryContent}</TableCell>
-            <TableCell style={cellStyle}>{contact.createdAt.slice(5, 10)}</TableCell>
+            <TableCell style={cellStyle}>{contact?.inquiryContent}</TableCell>
+            <TableCell style={cellStyle}>{contact?.createdAt.slice(5, 10)}</TableCell>
           </TableRow>
         ))}
       </TableBody>
@@ -394,12 +395,12 @@ const StatusTable = ({ orderTableHead, orderData }) => (
       </TableHead>
       <TableBody>
         {orderData?.map((order) => (
-          <TableRow key={order._id}>
-            <TableCell style={cellStyle}>{order.orderNum}</TableCell>
-            <TableCell style={cellStyle}>{order.createdAt.slice(5, 10)}</TableCell>
-            <TableCell style={cellStyle}>{order.contact.name}</TableCell>
-            <TableCell style={cellStyle}>{order.items.map((item) => item.bookId.title).join(', ')}</TableCell>
-            <TableCell style={cellStyle}>{order.totalPrice}</TableCell>
+          <TableRow key={order?._id}>
+            <TableCell style={cellStyle}>{order?.orderNum}</TableCell>
+            <TableCell style={cellStyle}>{order?.createdAt.slice(5, 10)}</TableCell>
+            <TableCell style={cellStyle}>{order?.contact?.name}</TableCell>
+            <TableCell style={cellStyle}>{order?.items?.map((item) => item?.bookId?.title).join(', ')}</TableCell>
+            <TableCell style={cellStyle}>₩{currencyFormat(order?.totalPrice)}</TableCell>
           </TableRow>
         ))}
       </TableBody>

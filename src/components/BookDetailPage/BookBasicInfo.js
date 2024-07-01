@@ -7,6 +7,7 @@ import * as types from '../../constants/cart.constants';
 // eslint-disable-next-line import/no-named-as-default
 import styled from 'styled-components';
 import { currencyFormat } from '../../utils/number';
+import { fontSize } from '@mui/system';
 
 const TaxDeductionLabel = styled.div`
   border: 1px solid;
@@ -33,7 +34,9 @@ const BookBasicInfo = ({ title, author, publisher, price }) => {
 
   return (
     <Box>
-      <TaxDeductionLabel>소득공제</TaxDeductionLabel>
+      <TaxDeductionLabel>
+        <Typography sx={{ fontSize: '0.7rem', p: '2px' }}> 소득공제</Typography>
+      </TaxDeductionLabel>
       <Typography variant="h4" sx={{ flexGrow: 1, mt: 0, mb: 3, fontSize: '1.75rem', fontWeight: 'bold' }}>
         {title}
       </Typography>

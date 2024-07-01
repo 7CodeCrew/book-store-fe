@@ -90,7 +90,7 @@ const Row = ({ book, comments, navigate, style }) => {
         <TableCell style={style}>{book.author}</TableCell>
         <TableCell style={style}>{book.publisher}</TableCell>
         <TableCell style={style}>{comments.length}</TableCell>
-        <TableCell style={style}>{new Date(comments[0].createdAt).toLocaleDateString()}</TableCell>
+        <TableCell style={style}>{comments[0].createdAt.slice(0, 10)}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -104,7 +104,7 @@ const Row = ({ book, comments, navigate, style }) => {
                   {comments.map((comment) => (
                     <TableRow key={comment._id}>
                       <TableCell style={style} component="th" scope="row">
-                        {new Date(comment.createdAt).toLocaleString()}
+                        {comment.createdAt.slice(0, 10)}
                       </TableCell>
                       <TableCell style={style} colSpan={3}>
                         {comment.content}

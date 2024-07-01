@@ -40,8 +40,7 @@ const CenteredGridItem = styled(Grid)(({ theme }) => ({
   },
 }));
 
-const DOMAIN = 'http://localhost:3000';
-// const DOMAIN = 'https://book-do-7-stars.netlify.app'; // For deployment
+const DOMAIN = 'https://book-do-7-stars.netlify.app'; // For deployment
 
 const EditorPage = () => {
   const { bookList } = useSelector((state) => state.book);

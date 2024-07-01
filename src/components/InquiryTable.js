@@ -23,7 +23,7 @@ const InquiryTable = ({ style, inquiries }) => {
               <TableCell style={style}>{inquiry.inquiryContent}</TableCell>
               <TableCell style={style}>{inquiry.emailReply ? 'Yes' : 'No'}</TableCell>
               <TableCell style={style}>{inquiry.smsReply ? 'Yes' : 'No'}</TableCell>
-              <TableCell style={style}>{new Date(inquiry.createdAt).toLocaleDateString()}</TableCell>
+              <TableCell style={style}>{inquiry.createdAt.slice(0, 10)}</TableCell>
             </TableRow>
           ))}
         </TableBody>
