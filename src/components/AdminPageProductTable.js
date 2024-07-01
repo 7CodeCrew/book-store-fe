@@ -54,7 +54,9 @@ const AdminPageProductTable = ({ bookList, bookTableHead, handleOpenEditDialog, 
             <TableHead>
               <TableRow>
                 {bookTableHead.map((head, index) => (
-                  <StyledTableCell key={index}>{head}</StyledTableCell>
+                  <StyledTableCell style={cellStyle} key={index}>
+                    {head}
+                  </StyledTableCell>
                 ))}
               </TableRow>
             </TableHead>
@@ -93,7 +95,8 @@ const AdminPageProductTable = ({ bookList, bookTableHead, handleOpenEditDialog, 
                   </StyledTableRow>
                 ))
               ) : (
-                <StyledTableCell style={{ textAlign: 'center' }}>상품 도서가 존재하지 않습니다.</StyledTableCell>
+                <StyledTableCell style={{ textAlign: 'center' }}></StyledTableCell>
+                // <StyledTableCell style={{ textAlign: 'center' }}>상품 도서가 존재하지 않습니다.</StyledTableCell>
               )}
             </TableBody>
           </Table>
